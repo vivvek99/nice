@@ -14,5 +14,5 @@ with st.beta_container():
         filtered_df = df
     for i, row in filtered_df.iterrows():
         topic = row["Topic"]
-        st.write(f"{topic}")
+        st.write(f"{i+1}. {topic}")
     st.write(" ")
