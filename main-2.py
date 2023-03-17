@@ -64,7 +64,7 @@ with st.sidebar:
     st.markdown("""
     # About 
     \nAsk any medical question and get an explanation. You can even clear your MCQ doubts.
-    \nPlease note that a detailed question will get a detailed answer.
+    \nPlease note that a detailed question will get a detailed answer and will take 10-15 seconds.
     \n\nDisclaimer: **DO NOT** use as a substitute for professional medical advice. This is meant for **EDUCATIONAL PURPOSES ONLY**.
     """)
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.64)"),unsafe_allow_html=True)
@@ -89,7 +89,7 @@ with st.sidebar:
 st.markdown("""
 # Ask me anything
 """)
-user_input = st.text_area("..and I will answer  NICEly", disabled=False, placeholder="Start typing a medical question here and press enter Cmd/Ctrl+⏎")
+user_input = st.text_area("..and I will answer  NICEly in ~10sec", disabled=False, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
 
 hide="""
 <style>
