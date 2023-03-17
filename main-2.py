@@ -6,7 +6,6 @@ from streamlit.components.v1 import html
 from langchain.vectorstores import Chroma
 from langchain.embeddings.openai import OpenAIEmbeddings
 
-os.environ['OPENAI_API_KEY'] = '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'
 embeddings = OpenAIEmbeddings()
 docsearch = Chroma(persist_directory='chroma', embedding_function=embeddings)
 
