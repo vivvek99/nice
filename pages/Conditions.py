@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 
+import streamlit.components.v1 as components
+
 df = pd.read_csv("conditions.csv")
 
 st.header("These are the conditions on which the model has been trained on")
