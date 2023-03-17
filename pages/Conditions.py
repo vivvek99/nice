@@ -8,5 +8,4 @@ with st.beta_container():
     st.write(" ")
     for i, condition in enumerate(df["Topic"], start=1):
         st.write(f"{i}. {condition}", unsafe_allow_html=True)
-        st.write("<br>", unsafe_allow_html=True)
     st.write(" ")
