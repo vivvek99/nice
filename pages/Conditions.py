@@ -7,5 +7,5 @@ st.header("These are the conditions on which the model has been trained on")
 with st.beta_container():
     st.write(" ")
     for i, condition in enumerate(df["Topic"], start=1):
-        st.write(f"{i}. {condition}", unsafe_allow_html=True)
+        st.write(f"{i}. {condition}")
     st.write(" ")
