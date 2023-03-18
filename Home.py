@@ -62,14 +62,14 @@ html_temp = """
 
 with st.sidebar:
     st.markdown("""
-    # About 
+    #### About 
     \nAsk any medical question and get an explanation. You can even clear your MCQ doubts.
     \nPlease note that a detailed question will get a detailed answer and will take 10-15 seconds.
     \n\nDisclaimer: **DO NOT** use as a substitute for professional medical advice. This is meant for **EDUCATIONAL PURPOSES ONLY**.
     """)
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("""
-    # How does it work?
+    #### How does it work?
     \nIt is trained on NICE CKS guidelines as in https://cks.nice.org.uk
     \n*If the source is anything else other than NICE, then the answer could be wrong.*
     """)
@@ -86,7 +86,7 @@ with st.sidebar:
     )
 
 st.markdown("""
-# Ask me anything
+## Ask me anything
 """)
 user_input = st.text_area("..and I will answer  NICEly in ~10sec", disabled=False, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
 
