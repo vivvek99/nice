@@ -88,7 +88,7 @@ with st.sidebar:
 st.markdown("""
 ## Ask me anything
 """)
-user_input = st.text_area("..and I will answer  NICEly in ~10sec", disabled=False, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
+user_input = st.text_area("..and I will answer  NICEly (in ~10sec)", disabled=True, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
 
 hide="""
 <style>
