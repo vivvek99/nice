@@ -9,9 +9,9 @@ with st.beta_container():
     st.write(" ")
     search_term = st.text_input("Search topics:")
     if search_term:
-        filtered_df = df[df["Topic"].str.contains(search_term, case=False)]
+        filtered_df = df[df["Topic"].str.contains(search_term, case=False)].reset_index(drop=True)
     else:
-        filtered_df = df
+        filtered_df = df.reset_index(drop=True)
     for i, row in filtered_df.iterrows():
         topic = row["Topic"]
         ref = row["Ref"]
