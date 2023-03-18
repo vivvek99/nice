@@ -70,8 +70,7 @@ with st.sidebar:
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("""
     # How does it work?
-    \nIt is trained on NICE CKS guidelines.
-    \nSource - https://cks.nice.org.uk
+    \nIt is trained on NICE CKS guidelines as in https://cks.nice.org.uk
     \n*If the source is anything else other than NICE, then the answer could be wrong.*
     """)
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
