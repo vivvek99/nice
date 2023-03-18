@@ -12,9 +12,8 @@ with st.beta_container():
         filtered_df = df[df["Topic"].str.contains(search_term, case=False)]
     else:
         filtered_df = df
-    counter = 1
     for i, row in filtered_df.iterrows():
         topic = row["Topic"]
-        st.write(f"{counter}. {topic}")
-        counter += 1
+        ref = row["Ref"]
+        st.write(f"{i+1}. [{topic}]({ref})")
     st.write(" ")
