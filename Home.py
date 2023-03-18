@@ -67,14 +67,14 @@ with st.sidebar:
     \nPlease note that a detailed question will get a detailed answer and will take 10-15 seconds.
     \n\nDisclaimer: **DO NOT** use as a substitute for professional medical advice. This is meant for **EDUCATIONAL PURPOSES ONLY**.
     """)
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.64)"),unsafe_allow_html=True)
+    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("""
     # How does it work?
     \nIt is trained on NICE CKS guidelines.
     \nSource - https://cks.nice.org.uk
     \n\nIf the source is anything else other than NICE, then the answer could be wrong.
     """)
-    st.markdown(html_temp.format("rgba(55, 53, 47, 0.64)"),unsafe_allow_html=True)
+    st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
     st.markdown("""
     <a href = "mailto:fazeen.nasser@outlook.com?subject = Feedback&body = Message">Send Feedback</a>
     """,
