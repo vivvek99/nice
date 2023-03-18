@@ -4,7 +4,7 @@ import pandas as pd
 df = pd.read_csv("conditions.csv")
 
 # Display the topics in a list with a search box
-st.markdown("## These are the topics on which this model has been trained")
+st.markdown("### These are the topics on which this model has been trained on")
 with st.beta_container():
     st.write(" ")
     search_term = st.text_input("Search topics:")
