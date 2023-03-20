@@ -23,8 +23,10 @@ from langchain.schema import (
     SystemMessage
 )
 
-system_template="""Use the following pieces of medical context to answer the users question.
-If you don't know the answer, just say that you don't know, Don't try to make up an answer.
+user1="""Use the following pieces of medical content to answer the users question.
+Try to explain things as if you're talking to a friend. Use emojis. 
+The answer must be interesting, elegant, elaborate and must use paragraphs and bullet points.
+If the answer can't be inferred from content, just say that you don't know, Don't try to make up an answer.
 ALWAYS return a "SOURCES" part in your answer.
 The "SOURCES" part should be a reference to the source of the document from which you got your answer.
 
@@ -32,21 +34,26 @@ Example of your response should be:
 
 ```
 The answer is foo
-SOURCES: https://cks.nice.org.uk/xyz
+SOURCES: ABC
 ```
 
-Begin!
-----------------
-{summaries}"""
+Ready to start?"""
+ass1="""Yes, I'm ready to start! Please provide me with the medical content."""
+user2="""{summaries}
+
+My question:
+{question}"""
 messages = [
-    SystemMessagePromptTemplate.from_template(system_template),
-    HumanMessagePromptTemplate.from_template("Please answer medically and explain why:\n\n{question}")
+    SystemMessagePromptTemplate.from_template("""You are a helpful medical assistant that uses pieces of medical content as context to answer a doctor's medical questions."""),
+    HumanMessagePromptTemplate.from_template(user1),
+    AIMessagePromptTemplate.from_template(ass1),
+    HumanMessagePromptTemplate.from_template(user2)
 ]
 prompt = ChatPromptTemplate.from_messages(messages)
 
 chain_type_kwargs = {"prompt": prompt}
 chain = VectorDBQAWithSourcesChain.from_chain_type(
-    ChatOpenAI(temperature=0, max_tokens = 800), 
+    ChatOpenAI(temperature=0, max_tokens=720), 
     chain_type="stuff", 
     vectorstore=docsearch,
     chain_type_kwargs=chain_type_kwargs
@@ -108,5 +115,5 @@ st.markdown(hide, unsafe_allow_html=True)
 
 if st.button("Answer") or user_input:
     result = chain({"question": user_input}, return_only_outputs=True)
-    markdown_text = f"#### Answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
+    markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
     st.markdown(markdown_text)
