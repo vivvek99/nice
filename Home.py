@@ -1,16 +1,11 @@
 """Python file to serve as the frontend"""
 import streamlit as st
-import os
-from streamlit_chat import message
-from streamlit.components.v1 import html
 from langchain.vectorstores import Chroma
 from langchain.embeddings.openai import OpenAIEmbeddings
 
 embeddings = OpenAIEmbeddings()
 docsearch = Chroma(persist_directory='chroma', embedding_function=embeddings)
 
-from langchain.callbacks.base import CallbackManager
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import VectorDBQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts.chat import (
@@ -18,11 +13,6 @@ from langchain.prompts.chat import (
     SystemMessagePromptTemplate,
     AIMessagePromptTemplate,
     HumanMessagePromptTemplate,
-)
-from langchain.schema import (
-    AIMessage,
-    HumanMessage,
-    SystemMessage
 )
 
 user1="""Use the following pieces of medical content to answer the users question.
