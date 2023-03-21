@@ -27,7 +27,7 @@ from langchain.schema import (
 
 user1="""Use the following pieces of medical content to answer the users question.
 Try to explain things as if you're talking to a friend.
-The answer must be interesting, elegant, elaborate and must use paragraphs and bullet points.
+The answer must be scientific, elegant, elaborate and must use 3-5 paragraphs and few bullet points.
 If the answer can't be inferred from content, just say that you don't know, Don't try to make up an answer.
 ALWAYS return a "SOURCES" part in your answer.
 The "SOURCES" part should be a reference to the source of the document from which you got your answer.
