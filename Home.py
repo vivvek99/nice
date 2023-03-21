@@ -30,18 +30,19 @@ Try to explain things in an informal tone but use medical terminology.
 The answer must be interesting, simple, elegant and in 3-5 paragraphs and some bullet points.
 If the answer can't be inferred from content, just say that you don't know, Don't try to make up an answer.
 ALWAYS return a "SOURCES" part in your answer.
-The "SOURCES" part should be a reference to the source of the document from which you got your answer.
+The "SOURCES" part should be a reference to the source in the context from which you got your answer.
 
 Example of your response should be:
 
 ```
 The answer is foo
-SOURCES: ABC
+SOURCES: https://cks.nice.org.uk/xyz
 ```
 
 Ready to start?"""
 ass1="""Yes, I'm ready to start! Please provide me with the medical content."""
-user2="""{summaries}
+user2="""Contexts:
+{summaries}
 
 My question:
 {question}"""
