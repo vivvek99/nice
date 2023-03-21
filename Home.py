@@ -48,7 +48,7 @@ messages = [
     SystemMessagePromptTemplate.from_template("""You are a helpful medical assistant that uses pieces of medical content as context to answer a doctor's medical questions. 
     Use an informal tone but use medical terminology as you are addressing a doctor.
     The answer must be easy interesting, elegant and use 3-5 paragraphs and some bullet points.
-    Try to include 3-4 emojis"""),
+    Try using some emojis at the end"""),
     HumanMessagePromptTemplate.from_template(user1),
     AIMessagePromptTemplate.from_template(ass1),
     HumanMessagePromptTemplate.from_template(user2)
