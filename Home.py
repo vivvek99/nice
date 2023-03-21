@@ -38,7 +38,7 @@ SOURCES: https://cks.nice.org.uk/xyz
 ```
 
 Ready to start?"""
-ass1="""Yes, I'm ready to start! Please provide me with the medical contexts."""
+ass1="""Yes, I'm ready to start! Please provide me with the medical contexts. 😊"""
 user2="""Contexts:
 {summaries}
 
@@ -47,7 +47,7 @@ My question:
 messages = [
     SystemMessagePromptTemplate.from_template("""You are a helpful medical assistant that uses pieces of medical content as context to answer a doctor's medical questions. 
     Use an informal tone but use medical terminology as you are addressing a doctor.
-    The answer must be easy interesting, elegant and use 3-5 paragraphs and some bullet points.
+    The answer must be easy concise, elegant and use 3-5 paragraphs and some bullet points.
     Try using some emojis at the end"""),
     HumanMessagePromptTemplate.from_template(user1),
     AIMessagePromptTemplate.from_template(ass1),
@@ -57,7 +57,7 @@ prompt = ChatPromptTemplate.from_messages(messages)
 
 chain_type_kwargs = {"prompt": prompt}
 chain = VectorDBQAWithSourcesChain.from_chain_type(
-    ChatOpenAI(streaming=True, callback_manager=CallbackManager([StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, max_tokens=720), 
+    ChatOpenAI(temperature=0, max_tokens=720), 
     chain_type="stuff", 
     vectorstore=docsearch,
     chain_type_kwargs=chain_type_kwargs
@@ -118,6 +118,7 @@ footer{
 st.markdown(hide, unsafe_allow_html=True)
 
 if st.button("Answer") or user_input:
-    result = chain({"question": user_input}, return_only_outputs=True)
-    markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
-    st.write(markdown_text)
+    with st.spinner('Thinking...'):
+        result = chain({"question": user_input}, return_only_outputs=True)
+        markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
+        st.write(markdown_text)
