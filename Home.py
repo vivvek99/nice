@@ -118,4 +118,4 @@ st.markdown(hide, unsafe_allow_html=True)
 if st.button("Answer") or user_input:
     result = chain({"question": user_input}, return_only_outputs=True)
     markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
-    st.markdown(markdown_text)
+    st.write(markdown_text)
