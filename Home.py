@@ -9,6 +9,8 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 embeddings = OpenAIEmbeddings()
 docsearch = Chroma(persist_directory='chroma', embedding_function=embeddings)
 
+from langchain.callbacks.base import CallbackManager
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import VectorDBQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts.chat import (
@@ -53,7 +55,7 @@ prompt = ChatPromptTemplate.from_messages(messages)
 
 chain_type_kwargs = {"prompt": prompt}
 chain = VectorDBQAWithSourcesChain.from_chain_type(
-    ChatOpenAI(temperature=0, max_tokens=720), 
+    ChatOpenAI(streaming=True, callback_manager=CallbackManager([StreamingStdOutCallbackHandler()]), verbose=True, temperature=0, max_tokens=720), 
     chain_type="stuff", 
     vectorstore=docsearch,
     chain_type_kwargs=chain_type_kwargs
