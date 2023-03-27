@@ -1,5 +1,6 @@
 """Python file to serve as the frontend"""
 import streamlit as st
+import csv
 from langchain.vectorstores import Chroma
 from langchain.embeddings.openai import OpenAIEmbeddings
 
