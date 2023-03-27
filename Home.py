@@ -112,3 +112,6 @@ if st.button("Answer") or user_input:
         result = chain({"question": user_input}, return_only_outputs=True)
         markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
         st.write(markdown_text)
+        with open('logs.csv', mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([user_input, result['answer'], result['sources']])
