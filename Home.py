@@ -35,10 +35,10 @@ user2="""Contexts:
 My question:
 {question}"""
 messages = [
-    SystemMessagePromptTemplate.from_template("""You are a helpful medical assistant that uses pieces of medical content as context to answer a doctor's medical questions. 
-    Use an informal tone but use medical terminology as you are addressing a doctor.
+    SystemMessagePromptTemplate.from_template("""You are a helpful assistant that uses pieces of medical content as context to answer any medical question. 
+    Be informal and fun but use medical terminology.
     The answer must be easy concise, elegant and use 3-5 paragraphs and some bullet points.
-    Try using some emojis at the end"""),
+    Try using emojis at the end of your message"""),
     HumanMessagePromptTemplate.from_template(user1),
     AIMessagePromptTemplate.from_template(ass1),
     HumanMessagePromptTemplate.from_template(user2)
