@@ -46,7 +46,7 @@ def accordion(answer, sources):
         st.write(f"Sources:\n {sources}")
 
 # Iterate through the rows of the dataframe and create an accordion for each row
-for index, row in df.iterrows():
+for index, row in df[::-1].iterrows():
     # Create two columns
     col1, col2 = st.columns([2, 3])
     
