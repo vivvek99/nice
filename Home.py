@@ -4,10 +4,20 @@ import csv
 from langchain.vectorstores import Chroma
 from langchain.embeddings.openai import OpenAIEmbeddings
 
-embeddings = OpenAIEmbeddings()
-docsearch = Chroma(persist_directory='chroma', embedding_function=embeddings)
+st.set_page_config(page_title="Ask NICEly CKS!", page_icon=":brain:")
 
-from langchain.chains import VectorDBQAWithSourcesChain
+@st.cache_resource
+def load_vectorstore(index_path):
+    embeddings = OpenAIEmbeddings()
+    vectorstore = Chroma(
+        embedding_function=embeddings, 
+        persist_directory=index_path
+    )
+    return vectorstore
+
+docsearch = load_vectorstore("chroma")
+
+from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts.chat import (
     ChatPromptTemplate,
@@ -17,7 +27,6 @@ from langchain.prompts.chat import (
 )
 
 user1="""Use the following pieces of medical content to answer the users question.
-If you can't answer from the provided contexts, just say that you don't know, Don't try to make up an answer.
 ALWAYS return a "SOURCES" part in your answer.
 The "SOURCES" part should be a reference to the sources in the contexts I provide from which you got your answer.
 
@@ -36,11 +45,10 @@ user2="""Contexts:
 My question:
 {question}"""
 messages = [
-    SystemMessagePromptTemplate.from_template("""Use the pieces of medical content as context to answer any medical question. 
-    Be informal and fun but use medical terminology.
-    The answer must be elaborate, elegant and information rich. Do not use fluff.
-    Use 3-5 short paragraphs and also use bullet points when appropriate.
-    Try using a few emojis.
+    SystemMessagePromptTemplate.from_template("""Use the pieces of medical content as context to answer a medical question. 
+    Be informal and fun with emojis but use medical terminology.
+    The answer must be specific, elegant and should follow a logical flow.
+    Answer using a combination of 3-5 paragraphs and bullet points to enable easy reading.
     Output in Markdown format"""),
     HumanMessagePromptTemplate.from_template(user1),
     AIMessagePromptTemplate.from_template(ass1),
@@ -49,15 +57,14 @@ messages = [
 prompt = ChatPromptTemplate.from_messages(messages)
 
 chain_type_kwargs = {"prompt": prompt}
-chain = VectorDBQAWithSourcesChain.from_chain_type(
+chain = RetrievalQAWithSourcesChain.from_chain_type(
     ChatOpenAI(temperature=0, max_tokens=720), 
     chain_type="stuff", 
-    vectorstore=docsearch,
+    retriever=docsearch.as_retriever(),
     chain_type_kwargs=chain_type_kwargs
 )
 
 # From here down is all the StreamLit UI.
-st.set_page_config(page_title="Ask NICEly CKS!", page_icon=":brain:")
 html_temp = """
                 <div style="background-color:{};padding:1px">
                 

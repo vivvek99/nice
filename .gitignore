@@ -1,3 +1,4 @@
+.gitignore
 .ipynb_checkpoints
 pages/Test Chat UI.py
 cks-full.csv
