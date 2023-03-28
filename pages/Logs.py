@@ -1,10 +1,8 @@
 import streamlit as st
 import pandas as pd
 
-df = pd.read_csv("conditions.csv")
-
 # Display the topics in a list with a search box
-st.markdown("### These are the topics on which this model has been trained on")
+st.markdown("### What others have been asking...")
 
 html_temp = """
                 <div style="background-color:{};padding:1px">
@@ -36,16 +34,24 @@ with st.sidebar:
     """,
     unsafe_allow_html=True,
     )
+
+# Read in the csv file
+df = pd.read_csv('logs.csv')
+
+# Define a function to create the accordion
+def accordion(answer, sources):
+    with st.expander("Answer"):
+        st.write(f"{answer}")
+        st.write(f"Sources:\n {sources}")
+
+# Iterate through the rows of the dataframe and create an accordion for each row
+for index, row in df[::-1].iterrows():
+    # Create two columns
+    col1, col2 = st.columns([2, 3])
     
-with st.container():
-    st.write(" ")
-    search_term = st.text_input("Search topics:")
-    if search_term:
-        filtered_df = df[df["Topic"].str.contains(search_term, case=False)].reset_index(drop=True)
-    else:
-        filtered_df = df.reset_index(drop=True)
-    for i, row in filtered_df.iterrows():
-        topic = row["Topic"]
-        ref = row["Ref"]
-        st.write(f"{i+1}. [{topic}]({ref})")
-    st.write(" ")
+    # Add the question to the first column
+    with col1:
+        st.write(row['Question'])
+    # Add the answer and sources to the second column
+    with col2:
+        accordion(row['Answer'], row['Sources'])
