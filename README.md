@@ -30,3 +30,5 @@ Question-Answering has the following steps, all handled by [RetrievalQAWithSourc
 1. Given a user question, look up relevant documents from the vectorstore using Embeddings and similarity search.
 2. Determine what a standalone question would be (using GPT-3.5-turbo).
 3. Pass the standalone question and relevant documents to GPT-3.5-turbo to generate a final answer.
+
+![How it works](How it works.png)
