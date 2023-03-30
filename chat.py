@@ -1,7 +1,7 @@
 from copy import deepcopy
 import streamlit as st
-from langchain.chains.qa_with_sources import load_qa_with_sources_chain
-from langchain.chat_models import ChatOpenAI
+from langchain.chains.question_answering import load_qa_chain
+from langchain.chat_models import PromptLayerChatOpenAI
 from langchain.docstore.document import Document
 from langchain.memory import ConversationSummaryBufferMemory
 from langchain.prompts import PromptTemplate
@@ -9,6 +9,9 @@ from langchain.vectorstores import Chroma
 
 import config
 from index import load_vector_store
+
+import promptlayer
+promptlayer.api_key = "pl_2b1769e7202b6a141d4491fca41e308a"
 
 
 def clear_input() -> None:
@@ -26,7 +29,7 @@ def get_input() -> str:
         label_visibility="hidden",
         key="temp",
         on_change=clear_input,
-        disabled=st.session_state.input_disabled,
+        # disabled=st.session_state.input_disabled,
     )
     return st.session_state["input"]
 
@@ -43,8 +46,9 @@ def get_response(query: str) -> str:
 
 def get_chain():
     if "chain" not in st.session_state:
-        st.session_state["chain"] = load_qa_with_sources_chain(
-            llm=ChatOpenAI(
+        st.session_state["chain"] = load_qa_chain(
+            llm=PromptLayerChatOpenAI(
+                pl_tags=["chat-nice-st"],
                 temperature=0,
                 model_name=config.MODEL_NAME,
                 max_tokens=512,
@@ -63,7 +67,7 @@ def get_memory() -> ConversationSummaryBufferMemory:
 
 
 def new_memory() -> ConversationSummaryBufferMemory:
-    llm = ChatOpenAI(model_name=config.MODEL_NAME, request_timeout=int(180))
+    llm = PromptLayerChatOpenAI(pl_tags=["chat-nice-st-memory"], model_name=config.MODEL_NAME, request_timeout=int(180))
     memory = ConversationSummaryBufferMemory(
         llm=llm,
         memory_key="chat_history",
@@ -75,7 +79,7 @@ def get_prompt() -> PromptTemplate:
     with open(config.PROMPT_PATH, "r") as f:
         template = f.read()
     prompt = PromptTemplate(
-        input_variables=["chat_history", "human_input", "summaries"],
+        input_variables=["chat_history", "human_input", "context"],
         template=template
     )
     return prompt

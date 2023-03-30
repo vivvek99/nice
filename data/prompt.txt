@@ -16,7 +16,7 @@ SOURCES:
 ```
 
 =====BEGIN DOCUMENT=====
-{summaries}
+{context}
 =====END DOCUMENT=====
 
 =====BEGIN CONVERSATION=====
