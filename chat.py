@@ -22,7 +22,7 @@ def get_input() -> str:
         label="You: ",
         value="",
         placeholder=("Type here, send with Cmd+Enter"
-                     if not st.session_state.input_disabled else "Getting response...\nRefresh the page if stuck"),
+                     if not st.session_state.input_disabled else "Getting response...\nRefresh the page if stuck for >10s"),
         label_visibility="hidden",
         key="temp",
         on_change=clear_input,
