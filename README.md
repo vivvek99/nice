@@ -1,4 +1,4 @@
-# 🦜️🔗 Ask NICE
+# 🦜️🔗 Chat with NICE
 
 Ask any medical question and get a beautiful explanation with the [NICE Clinical Knowledge Summaries](https://cks.nice.org.uk/) as the source. You can even clear your PLAB or MRCP MCQ doubts.
 
@@ -11,11 +11,7 @@ Try out the app [here](https://asknice.streamlit.app)
 
 ## Deployment
 
-To deploy this project locally, ensure that python 3.10 is installed run
-
-```bash
-  git clone https://github.com/faz-cxr/nice.gist
-```
+To deploy this project locally, ensure that python 3.10 is installed, clone the repo and run
 
 ```bash
   pip install -r requirements.txt
@@ -24,6 +20,8 @@ To deploy this project locally, ensure that python 3.10 is installed run
   streamlit run main.py
 ```
 ## 📚 Technical description
+
+WIP
 
 Question-Answering has the following steps, all handled by [RetrievalQAWithSourcesChain](https://python.langchain.com/en/latest/modules/chains/index_examples/vector_db_qa_with_sources.html):
 
