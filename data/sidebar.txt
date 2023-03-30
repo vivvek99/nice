@@ -16,5 +16,5 @@ It is trained on NICE CKS guidelines as in https://cks.nice.org.uk
 <a href = "mailto:fazeen.nasser@outlook.com?subject = Feedback&body = Message">Send Feedback</a>
 
 
-[Source code](https://github.com/faz-cxr/chatnice)
+[Source code](https://github.com/faz-cxr/nice/tree/Chat-UI)
 <br/><br/>
