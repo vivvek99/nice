@@ -1,6 +1,6 @@
 from copy import deepcopy
 import streamlit as st
-from langchain.chains.question_answering import load_qa_chain
+from langchain.chains.qa_with_sources import load_qa_with_sources_chain
 from langchain.chat_models import PromptLayerChatOpenAI
 from langchain.docstore.document import Document
 from langchain.memory import ConversationSummaryBufferMemory
@@ -46,7 +46,7 @@ def get_response(query: str) -> str:
 
 def get_chain():
     if "chain" not in st.session_state:
-        st.session_state["chain"] = load_qa_chain(
+        st.session_state["chain"] = load_qa_with_sources_chain(
             llm=PromptLayerChatOpenAI(
                 pl_tags=["chat-nice-st"],
                 temperature=0,
@@ -79,7 +79,7 @@ def get_prompt() -> PromptTemplate:
     with open(config.PROMPT_PATH, "r") as f:
         template = f.read()
     prompt = PromptTemplate(
-        input_variables=["chat_history", "human_input", "context"],
+        input_variables=["chat_history", "human_input", "summaries"],
         template=template
     )
     return prompt
