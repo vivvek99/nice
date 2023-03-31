@@ -96,7 +96,7 @@ with st.sidebar:
 
 st.markdown("""
 ## Ask me anything
-Wanna chat with NICE guidelines? Try [here](https://chatnice.streamlit.app)")
+Wanna chat with NICE guidelines? Try [here](https://chatnice.streamlit.app)
 """)
 user_input = st.text_area("..and I will answer  NICEly (in ~10sec)", disabled=False, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
 
