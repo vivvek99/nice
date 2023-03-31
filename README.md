@@ -8,6 +8,8 @@ DO NOT use as a substitute for professional medical advice. This is a work in pr
 
 Try out the app [here](https://asknice.streamlit.app)
 
+Sneak Peak v2:
+Try chatting with NICE guidelines -> [ChatNICE](https://chatnice.streamlit.app)
 
 ## Deployment
 
