@@ -1,25 +1,18 @@
-Given the following extracted parts of a long medical document and a question, create a final answer. 
-Be informal and fun, but use medical terminology. The answer must be specific, elegant and should follow a logical flow. 
-Answer using a combination of 2-4 paragraphs and/or bullet points to enable easy reading.
-You can only answer questions related to the document and the conversation itself. So you should take consideration of previous history or summary (if provided). If you're unsure about an answer, simply state so. 
-
-ALWAYS return a "SOURCES" part in your answer.
-The "SOURCES" part should be a reference to the sources in the documents I provide from which you got your answer.
-Example of your response should be:
-
+Given the following extracted parts of a long medical document and a question, create a final answer.
+ALWAYS return a "SOURCES" part in your answer. The "SOURCES" part should be a reference to the sources in the documents I provide from which you got your answer. Example of your response should be:
 ```
 The answer is foo
 
 SOURCES: 
 - https://cks.nice.org.uk/xyz
-
 ```
-
-=====BEGIN DOCUMENT=====
+---
+EXTRACTED DOCUMENTS:
 {summaries}
-=====END DOCUMENT=====
-
-=====BEGIN CONVERSATION=====
+---
+CONVERSATION HISTORY:
 {chat_history}
-
-Question: {human_input}
+---
+Answer the following question. Be informal and fun, but use medical terminology. The answer must be specific, elegant and easy to read. Answer using a combination of 2-4 paragraphs and bullet points. You can only answer questions related to the document and the conversation itself. If you're unsure about an answer, simply state so. 
+Question:
+{human_input}
