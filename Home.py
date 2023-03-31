@@ -85,6 +85,7 @@ with st.sidebar:
     \n*If the source is anything else other than NICE, then the answer could be wrong.*
     """)
     st.markdown(html_temp.format("rgba(55, 53, 47, 0.16)"),unsafe_allow_html=True)
+    st.markdown("Wanna chat with NICE guidelines? Try [here](https://chatnice.streamlit.app)")
     st.markdown("""
     <a href = "mailto:fazeen.nasser@outlook.com?subject = Feedback&body = Message">Send Feedback</a>
     """,
