@@ -83,7 +83,6 @@ with st.sidebar:
     \nIt is trained on NICE CKS guidelines as in https://cks.nice.org.uk
     \n*If the source is anything else other than NICE, then the answer could be wrong.*
     """)
-    st.markdown("Wanna chat with NICE guidelines? Try [here](https://chatnice.streamlit.app)")
     st.markdown("""
     <a href = "mailto:fazeen.nasser@outlook.com?subject = Feedback&body = Message">Send Feedback</a>
     """,
@@ -97,6 +96,7 @@ with st.sidebar:
 
 st.markdown("""
 ## Ask me anything
+Wanna chat with NICE guidelines? Try [here](https://chatnice.streamlit.app)")
 """)
 user_input = st.text_area("..and I will answer  NICEly (in ~10sec)", disabled=False, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
 
