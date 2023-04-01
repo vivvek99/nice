@@ -1,0 +1,8 @@
+EXTRACTED DOCUMENTS:
+{summaries}
+---
+CONVERSATION HISTORY:
+{chat_history}
+---
+My question is:
+{human_input}

@@ -4,8 +4,15 @@ from langchain.chains.qa_with_sources import load_qa_with_sources_chain
 from langchain.chat_models import PromptLayerChatOpenAI
 from langchain.docstore.document import Document
 from langchain.memory import ConversationSummaryBufferMemory
-from langchain.prompts import PromptTemplate
+from langchain.prompts import ChatPromptTemplate
 from langchain.vectorstores import Chroma
+from langchain.prompts import (
+    ChatPromptTemplate,
+    PromptTemplate,
+    SystemMessagePromptTemplate,
+    AIMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
 
 import config
 from index import load_vector_store
@@ -61,13 +68,18 @@ def get_chain():
     )
     return chain
 
-def get_prompt() -> PromptTemplate:
-    with open(config.PROMPT_PATH, "r") as f:
-        template = f.read()
-    prompt = PromptTemplate(
-        input_variables=["chat_history", "human_input", "summaries"],
-        template=template
-    )
+def get_prompt() -> ChatPromptTemplate:
+    with open(config.CHAT_SYS_PROMPT_PATH, "r") as f:
+        systemplate = f.read()
+    humtemplate = """Answer the following question. Be informal and fun, but use medical terminology. I shall give you the contexts and conversation history (if any). Ready?"""
+    aitemplate = """Please provide me with the medical contexts and conversation history (if any). 😊"""
+    with open(config.CHAT_HUM_PROMPT_PATH, "r") as f:
+        humtemplate2 = f.read()
+    system_message_prompt = SystemMessagePromptTemplate.from_template(systemplate)
+    human_message_prompt = HumanMessagePromptTemplate.from_template(humtemplate)
+    ai_message_prompt = AIMessagePromptTemplate.from_template(aitemplate)
+    human_message_prompt2 = HumanMessagePromptTemplate.from_template(humtemplate2)
+    prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt, ai_message_prompt, human_message_prompt2])
     return prompt
 
 def get_documents(query: str) -> list[Document]:
