@@ -54,7 +54,7 @@ def createPage():
         SystemMessagePromptTemplate.from_template("""Use the pieces of medical content as context to answer a medical question. 
         Be informal and fun with emojis but use medical terminology.
         The answer must be specific, elegant and should follow a logical flow.
-        Answer using a combination of bullet points and/or 3-5 paragraphs to enable easy reading.
+        Answer using 3-5 paragraphs or bullet points to enable easy reading.
         Output in Markdown format"""),
         HumanMessagePromptTemplate.from_template(user1),
         AIMessagePromptTemplate.from_template(ass1),
