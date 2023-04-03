@@ -34,14 +34,7 @@ def createPage():
         HumanMessagePromptTemplate,
     )
 
-    user1="""Use the following pieces of medical content to answer the users question.
-    ALWAYS return a "SOURCES" part in your answer. The "SOURCES" part should be a reference to the sources in the contexts I provide from which you got your answer.
-    Example of your response should be:
-    ```
-    The answer is foo
-    SOURCES: 
-    - https://cks.nice.org.uk/xyz
-    ```
+    user1="""I will provide you with some contexts to help you answer a question. Be informal, friendly and fun, but use medical terminology. The answer must be elegant and must follow a logical flow. Explain the answer using a combination of 2-3 paragraphs and bullet points. Are you ready?
     """
     ass1="""Please provide me with the medical contexts. 😊"""
     user2="""Contexts:
@@ -51,11 +44,15 @@ def createPage():
     My question:
     {question}"""
     messages = [
-        SystemMessagePromptTemplate.from_template("""Use the pieces of medical content as context to answer a medical question. 
-        Be informal and fun with emojis but use medical terminology.
-        The answer must be specific, elegant and should follow a logical flow.
-        Answer using 3-5 paragraphs or bullet points to enable easy reading.
-        Output in Markdown format"""),
+        SystemMessagePromptTemplate.from_template("""You are a helpful medical assistant that answers a doctor's questions. You will be given extracted parts of a long medical document to help answer questions. You can only answer the question if its related to the context. If you're unsure about the answer, simply state you haven't been fed with the appropriate NICE guidelines.
+ALWAYS return a "SOURCES" part in your answer. The "SOURCES" part should be a reference to the sources in the documents provided from which you got your answer. If you're unsure about an answer, simply state so. Example of your response should be:
+```
+The answer is foo
+
+SOURCES: 
+- https://cks.nice.org.uk/xyz
+```
+"""),
         HumanMessagePromptTemplate.from_template(user1),
         AIMessagePromptTemplate.from_template(ass1),
         HumanMessagePromptTemplate.from_template(user2)
@@ -64,10 +61,11 @@ def createPage():
 
     chain_type_kwargs = {"prompt": prompt}
     chain = RetrievalQAWithSourcesChain.from_chain_type(
-        PromptLayerChatOpenAI(temperature=0, max_tokens=720, pl_tags=["cks-full-og"]), 
+        PromptLayerChatOpenAI(temperature=0, max_tokens=700, pl_tags=["cks-full-og"]), 
         chain_type="stuff",
-        retriever=docsearch.as_retriever(),
+        retriever=docsearch.as_retriever(search_kwargs={"k": 7}),
         chain_type_kwargs=chain_type_kwargs,
+        max_tokens_limit=3000,
         reduce_k_below_max_tokens=True
     )
 
