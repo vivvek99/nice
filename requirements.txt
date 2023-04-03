@@ -1,5 +1,5 @@
 langchain>=0.0.109
 streamlit>=1.18.1
 streamlit_chat>=0.0.2.1
-chromadb
+pinecone-client
 openai

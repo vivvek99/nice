@@ -1,24 +1,33 @@
 """Python file to serve as the frontend"""
 import streamlit as st
 import csv
-from langchain.vectorstores import Chroma
 from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import Pinecone
+import pinecone
 
 st.set_page_config(page_title="Ask NICEly CKS!", page_icon=":brain:")
 
 @st.cache_resource
-def load_vectorstore(index_path):
-    embeddings = OpenAIEmbeddings()
-    vectorstore = Chroma(
-        embedding_function=embeddings, 
-        persist_directory=index_path
+def load_vectorstore():
+    # initialize pinecone
+    pinecone.init(
+        api_key="25db0a5b-ee2d-4d5e-86ba-5bce9cd90804",  # find at app.pinecone.io
+        environment="us-east1-gcp"  # next to api key in console
     )
+    vectorstore = Pinecone.from_existing_index(
+        index_name="cks-summary-1500tiktoken", 
+        namespace="full-cks", 
+        embedding = OpenAIEmbeddings()
+        )
     return vectorstore
 
-docsearch = load_vectorstore("chroma")
+docsearch = load_vectorstore()
+
+import promptlayer
+promptlayer.api_key = "pl_2b1769e7202b6a141d4491fca41e308a"
 
 from langchain.chains import RetrievalQAWithSourcesChain
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import PromptLayerChatOpenAI
 from langchain.prompts.chat import (
     ChatPromptTemplate,
     SystemMessagePromptTemplate,
@@ -27,19 +36,17 @@ from langchain.prompts.chat import (
 )
 
 user1="""Use the following pieces of medical content to answer the users question.
-ALWAYS return a "SOURCES" part in your answer.
-The "SOURCES" part should be a reference to the sources in the contexts I provide from which you got your answer.
-
+ALWAYS return a "SOURCES" part in your answer. The "SOURCES" part should be a reference to the sources in the contexts I provide from which you got your answer.
 Example of your response should be:
-
 ```
 The answer is foo
-SOURCES: https://cks.nice.org.uk/xyz
+SOURCES: 
+- https://cks.nice.org.uk/xyz
 ```
-
 """
 ass1="""Please provide me with the medical contexts. 😊"""
 user2="""Contexts:
+
 {summaries}
 
 My question:
@@ -48,7 +55,7 @@ messages = [
     SystemMessagePromptTemplate.from_template("""Use the pieces of medical content as context to answer a medical question. 
     Be informal and fun with emojis but use medical terminology.
     The answer must be specific, elegant and should follow a logical flow.
-    Answer using a combination of 3-5 paragraphs and bullet points to enable easy reading.
+    Answer using a combination of bullet points and/or 3-5 paragraphs to enable easy reading.
     Output in Markdown format"""),
     HumanMessagePromptTemplate.from_template(user1),
     AIMessagePromptTemplate.from_template(ass1),
@@ -58,10 +65,11 @@ prompt = ChatPromptTemplate.from_messages(messages)
 
 chain_type_kwargs = {"prompt": prompt}
 chain = RetrievalQAWithSourcesChain.from_chain_type(
-    ChatOpenAI(temperature=0, max_tokens=720), 
-    chain_type="stuff", 
+    PromptLayerChatOpenAI(temperature=0, max_tokens=720, pl_tags=["cks-full-og"]), 
+    chain_type="stuff",
     retriever=docsearch.as_retriever(),
-    chain_type_kwargs=chain_type_kwargs
+    chain_type_kwargs=chain_type_kwargs,
+    reduce_k_below_max_tokens=True
 )
 
 # From here down is all the StreamLit UI.
@@ -121,6 +129,6 @@ if st.button("Answer") or user_input:
         result = chain({"question": user_input}, return_only_outputs=True)
         markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
         st.markdown(markdown_text)
-        with open('logs.csv', mode='a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([user_input, result['answer'], result['sources']])
+        # with open('logs.csv', mode='a', newline='') as file:
+        #     writer = csv.writer(file)
+        #     writer.writerow([user_input, result['answer'], result['sources']])
