@@ -13,7 +13,7 @@ Try chatting with NICE guidelines -> [ChatNICE](https://chatnice.streamlit.app)
 
 ## Deployment
 
-To deploy this project locally, ensure that python 3.10 is installed run
+To deploy this project locally, ensure that python 3.10 is installed and then run:
 
 ```bash
   git clone https://github.com/faz-cxr/nice.gist
