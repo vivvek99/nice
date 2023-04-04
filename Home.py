@@ -8,12 +8,12 @@ st.set_page_config(
     #layout="wide"
     )
 
-v_menu=["Ask NICE", "About", "Conditions", "Logs",]
+v_menu=["Ask NICE", "About", "Logs", "Conditions"]
 
 selected = option_menu(
     menu_title=None,
     options=v_menu,
-    icons=["robot","info-circle","list-ol","activity"],
+    icons=["robot","info-circle","activity","list-ol"],
     menu_icon="menu-down",
     default_index=0,
     orientation="horizontal"
@@ -25,8 +25,8 @@ if selected=="Ask NICE":
 if selected=="About":
     About.createPage()
 
-if selected=="Conditions":
-    Conditions.createPage()
-
 if selected=="Logs":
     Logs.createPage()
+
+if selected=="Conditions":
+    Conditions.createPage()
