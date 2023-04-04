@@ -43,23 +43,10 @@ if __name__ == '__main__':
     conversation_container = st.empty()
     web.display_conversation(conversation_container)
     user_input = chat.get_input()
-    st.markdown(
-    """
-    <style>
-        div[data-testid="column"]:nth-of-type(2)
-        {
-            text-align: end;
-        } 
-    </style>
-    """,unsafe_allow_html=True
-)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.button("Send")
-    with col2:
-        if st.button("Reset"):
-            st.cache_resource.clear()
-            for key in st.session_state.keys():
-                del st.session_state[key]
-            st.experimental_rerun()
+    st.button("Send")
+    if st.button("Reset"):
+        st.cache_resource.clear()
+        for key in st.session_state.keys():
+            del st.session_state[key]
+        st.experimental_rerun()
     check_input(conversation_container, user_input)

@@ -38,5 +38,5 @@ def display_conversation(container: DeltaGenerator):
             ai_list.append("...")
 
         for i, (human_msg, ai_msg) in enumerate(zip(human_list, ai_list)):
-            message_containers[i * 2].info(human_msg, icon="💡")
+            message_containers[i * 2].info(human_msg, icon="👨🏻‍⚕️")
             message_containers[i * 2 + 1].success(ai_msg, icon="🤖")
