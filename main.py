@@ -39,10 +39,27 @@ def check_input(container: DeltaGenerator, query: str) -> None:
 if __name__ == '__main__':
     web.set_web()
     init_session_state()
-    index.create_index()
     index.load_vector_store()
     conversation_container = st.empty()
     web.display_conversation(conversation_container)
     user_input = chat.get_input()
-    st.button("Send")
+    st.markdown(
+    """
+    <style>
+        div[data-testid="column"]:nth-of-type(2)
+        {
+            text-align: end;
+        } 
+    </style>
+    """,unsafe_allow_html=True
+)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.button("Send")
+    with col2:
+        if st.button("Reset"):
+            st.cache_resource.clear()
+            for key in st.session_state.keys():
+                del st.session_state[key]
+            st.experimental_rerun()
     check_input(conversation_container, user_input)

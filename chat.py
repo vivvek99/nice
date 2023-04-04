@@ -4,11 +4,9 @@ from langchain.chains.qa_with_sources import load_qa_with_sources_chain
 from langchain.chat_models import PromptLayerChatOpenAI
 from langchain.docstore.document import Document
 from langchain.memory import ConversationSummaryBufferMemory
-from langchain.prompts import ChatPromptTemplate
-from langchain.vectorstores import Chroma
+from langchain.vectorstores import Pinecone
 from langchain.prompts import (
     ChatPromptTemplate,
-    PromptTemplate,
     SystemMessagePromptTemplate,
     AIMessagePromptTemplate,
     HumanMessagePromptTemplate,
@@ -54,45 +52,56 @@ def get_chain():
             pl_tags=["chat-nice-st"],
             temperature=0,
             model_name=config.MODEL_NAME,
-            max_tokens=600,
+            max_tokens=700,
             request_timeout=int(180)
         ),
         chain_type="stuff",
-        memory=ConversationSummaryBufferMemory(
-            llm=PromptLayerChatOpenAI(pl_tags=["chat-nice-st-memory"], model_name=config.MODEL_NAME, request_timeout=int(180)),
-            max_token_limit=128,
-            memory_key="chat_history",
-            input_key="human_input"
-        ),
+        memory=get_memory(),
         prompt=get_prompt()
     )
     return chain
 
+@st.cache_resource
+def get_memory():
+    memory=ConversationSummaryBufferMemory(
+        llm=PromptLayerChatOpenAI(pl_tags=["chat-nice-st-memory"], model_name=config.MODEL_NAME, request_timeout=int(180)),
+        max_token_limit=300,
+        memory_key="chat_history",
+        input_key="human_input",
+    )
+    return memory
+
 def get_prompt() -> ChatPromptTemplate:
-    with open(config.CHAT_SYS_PROMPT_PATH, "r") as f:
+    with open(config.SYS_PROMPT_PATH, "r") as f:
         systemplate = f.read()
-    humtemplate = """Answer the following question. Be informal and fun, but use medical terminology. I shall give you the contexts and conversation history (if any). Ready?"""
-    aitemplate = """Please provide me with the medical contexts and conversation history (if any). 😊"""
-    with open(config.CHAT_HUM_PROMPT_PATH, "r") as f:
+    with open(config.HUM_PROMPT_PATH, "r") as f:
+        humtemplate = f.read()
+    with open(config.HUM2_PROMPT_PATH, "r") as f:
         humtemplate2 = f.read()
     system_message_prompt = SystemMessagePromptTemplate.from_template(systemplate)
-    human_message_prompt = HumanMessagePromptTemplate.from_template(humtemplate)
-    ai_message_prompt = AIMessagePromptTemplate.from_template(aitemplate)
+    #human_message_prompt = HumanMessagePromptTemplate.from_template(humtemplate)
+    #ai_message_prompt = AIMessagePromptTemplate.from_template("Yes I am ready.")
     human_message_prompt2 = HumanMessagePromptTemplate.from_template(humtemplate2)
-    prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt, ai_message_prompt, human_message_prompt2])
+    prompt = ChatPromptTemplate.from_messages([
+        system_message_prompt, 
+        #human_message_prompt, 
+        #ai_message_prompt, 
+        human_message_prompt2])
     return prompt
 
 def get_documents(query: str) -> list[Document]:
     docsearch = get_docsearch()
-    retriever = docsearch.as_retriever()
-    if "ai" in st.session_state:
-        last_resp = str(st.session_state["ai"][-1:])
-        fquery = last_resp+query
+    retriever = docsearch.as_retriever(search_kwargs={"k": 6})
+    if st.session_state["ai"] != []:
+        memory = get_memory()
+        memory_data = memory.load_memory_variables({})
+        history = memory_data['chat_history']
+        fquery = f"\nChat History:\n---\n{history}\n---\nQuestion:\n{query}"
     else:
-        fquery = query
+        fquery = f"\nQuestion:\n{query}"
     return retriever.get_relevant_documents(fquery)
 
-def get_docsearch() -> Chroma:
+def get_docsearch() -> Pinecone:
     if "docsearch" not in st.session_state:
         st.session_state["docsearch"] = load_vector_store()
     return st.session_state["docsearch"]

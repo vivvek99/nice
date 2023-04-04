@@ -1,6 +1,6 @@
-langchain==0.0.126
-streamlit==1.18.1
-chromadb
+langchain>=0.0.126
+streamlit>=1.18.1
+pinecone-client
 openai
 tiktoken
 promptlayer

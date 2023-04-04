@@ -7,7 +7,7 @@ import config
 
 
 def set_web():
-    st.set_page_config(page_title="Chat NICEly", layout="wide")
+    st.set_page_config(page_title="Chat NICEly")
     st.title("Chat with NICE CKS")
 
     with open(config.INTRO_PATH, "r") as f:
@@ -19,7 +19,6 @@ def set_web():
     with st.sidebar:
         st.title("About")
         st.markdown(sidebar_text, unsafe_allow_html=True)
-
     hide_menu_style = """
             <style>
             #MainMenu {visibility: hidden;}
