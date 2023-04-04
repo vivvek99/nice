@@ -1,7 +1,0 @@
-.gitignore
-.ipynb_checkpoints
-cks-full.csv
-csv-cleanup.py
-test.ipynb
-test.py
-logs.csv
