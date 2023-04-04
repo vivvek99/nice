@@ -8,7 +8,7 @@ st.set_page_config(
     #layout="wide"
     )
 
-v_menu=["Ask NICE", "About", "Logs", "Conditions"]
+v_menu=["Ask", "About", "Logs", "Conditions"]
 
 selected = option_menu(
     menu_title=None,
@@ -19,7 +19,7 @@ selected = option_menu(
     orientation="horizontal"
 )
 
-if selected=="Ask NICE":
+if selected=="Ask":
     App.createPage()
 
 if selected=="About":
