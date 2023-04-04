@@ -39,7 +39,7 @@ def createPage():
         HumanMessagePromptTemplate,
     )
 
-    user1="""I will provide you with some contexts to help you answer a question. Be informal, friendly and fun, but use medical terminology. The answer must be elegant and must follow a logical flow. Explain the answer using a combination of 2-3 paragraphs and bullet points. Are you ready?
+    user1="""I will provide you with some contexts to help you answer a question. Be informal, friendly and fun, but use medical terminology. The answer must be elegant and must follow a logical flow. Explain the answer using a combination of bullet points and 3-4 paragraphs. Are you ready?
     """
     ass1="""Please provide me with the medical contexts. 😊"""
     user2="""Contexts:
