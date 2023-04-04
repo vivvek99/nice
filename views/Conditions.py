@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-df = pd.read_csv("conditions.csv")
+df = pd.read_csv("./files/conditions.csv")
 def createPage():
     # Display the topics in a list with a search box
     st.markdown("### These are the topics on which this model has been trained on")
@@ -12,22 +12,22 @@ def createPage():
                     </div>
                     """
 
-    with st.sidebar:
-        st.markdown("""
-        ### About 
-        \nAsk any medical question and get an explanation. You can even clear your MCQ doubts.
-        \nPlease note that a detailed question will get a detailed answer and will take 10-15 seconds.
-        \n\nDisclaimer: **DO NOT** use as a substitute for professional medical advice. This is meant for **EDUCATIONAL PURPOSES ONLY**.
-        \n### How does it work?
-        \nIt is trained on NICE CKS guidelines as in https://cks.nice.org.uk
-        \n*If the source is anything else other than NICE, then the answer could be wrong.*
-        """)
-        st.markdown("""[Source Code](https://github.com/faz-cxr/nice)
-        <a href = "mailto:fazeen.nasser@outlook.com?subject = Feedback&body = Message">Send Feedback</a><br>
-        <a href="https://www.buymeacoffee.com/fazeen" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 35px;width: 110px ;" ></a>
-        """,
-        unsafe_allow_html=True,
-        )
+    # with st.sidebar:
+    #     st.markdown("""
+    #     ### About 
+    #     \nAsk any medical question and get an explanation. You can even clear your MCQ doubts.
+    #     \nPlease note that a detailed question will get a detailed answer and will take 10-15 seconds.
+    #     \n\nDisclaimer: **DO NOT** use as a substitute for professional medical advice. This is meant for **EDUCATIONAL PURPOSES ONLY**.
+    #     \n### How does it work?
+    #     \nIt is trained on NICE CKS guidelines as in https://cks.nice.org.uk
+    #     \n*If the source is anything else other than NICE, then the answer could be wrong.*
+    #     """)
+    #     st.markdown("""[Source Code](https://github.com/faz-cxr/nice)
+    #     <a href = "mailto:fazeen.nasser@outlook.com?subject = Feedback&body = Message">Send Feedback</a><br>
+    #     <a href="https://www.buymeacoffee.com/fazeen" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 35px;width: 110px ;" ></a>
+    #     """,
+    #     unsafe_allow_html=True,
+    #     )
         
     with st.container():
         st.write(" ")

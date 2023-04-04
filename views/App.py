@@ -49,7 +49,7 @@ def createPage():
     My question:
     {question}"""
     messages = [
-        SystemMessagePromptTemplate.from_template("""You are a helpful medical assistant that answers a doctor's questions. You will be given extracted parts of a long medical document to help answer questions. You can only answer the question if its related to the context. If you're unsure about the answer, simply state you haven't been fed with the appropriate NICE guidelines.
+        SystemMessagePromptTemplate.from_template("""You are a helpful AI medical assistant that answers a doctor's questions. You will be given extracted parts of a long medical document to help answer questions. You can only answer the question if its related to the context. If you're unsure about the answer, simply state you haven't been fed with the appropriate NICE guidelines.
 ALWAYS return a "SOURCES" part in your answer. The "SOURCES" part should be a reference to the sources in the documents provided from which you got your answer. If you're unsure about an answer, simply state so. Example of your response should be:
 ```
 The answer is foo
@@ -73,30 +73,22 @@ SOURCES:
         max_tokens_limit=3000,
         reduce_k_below_max_tokens=True
     )
-
-    # From here down is all the StreamLit UI.
-    html_temp = """
-                    <div style="background-color:{};padding:1px">
-                    
-                    </div>
-                    """
-
-    with st.sidebar:
-        st.markdown("""
-        ### About 
-        \nAsk any medical question and get an explanation. You can even clear your MCQ doubts.
-        \nPlease note that a detailed question will get a detailed answer and will take 10-15 seconds.
-        \n\nDisclaimer: **DO NOT** use as a substitute for professional medical advice. This is meant for **EDUCATIONAL PURPOSES ONLY**.
-        \n### How does it work?
-        \nIt is trained on NICE CKS guidelines as in https://cks.nice.org.uk
-        \n*If the source is anything else other than NICE, then the answer could be wrong.*
-        """)
-        st.markdown("""[Source Code](https://github.com/faz-cxr/nice)
-        <a href = "mailto:fazeen.nasser@outlook.com?subject = Feedback&body = Message">Send Feedback</a><br>
-        <a href="https://www.buymeacoffee.com/fazeen" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 35px;width: 110px ;" ></a>
-        """,
-        unsafe_allow_html=True,
-        )
+    # with st.sidebar:
+    #     st.markdown("""
+    #     ### About 
+    #     \nAsk any medical question and get an explanation. You can even clear your MCQ doubts.
+    #     \nPlease note that a detailed question will get a detailed answer and will take 10-15 seconds.
+    #     \n\nDisclaimer: **DO NOT** use as a substitute for professional medical advice. This is meant for **EDUCATIONAL PURPOSES ONLY**.
+    #     \n### How does it work?
+    #     \nIt is trained on NICE CKS guidelines as in https://cks.nice.org.uk
+    #     \n*If the source is anything else other than NICE, then the answer could be wrong.*
+    #     """)
+    #     st.markdown("""[Source Code](https://github.com/faz-cxr/nice)
+    #     <a href = "mailto:fazeen.nasser@outlook.com?subject = Feedback&body = Message">Send Feedback</a><br>
+    #     <a href="https://www.buymeacoffee.com/fazeen" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 35px;width: 110px ;" ></a>
+    #     """,
+    #     unsafe_allow_html=True,
+    #     )
 
     st.markdown("""
     ## Ask me anything
