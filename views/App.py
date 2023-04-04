@@ -1,9 +1,11 @@
 """Python file to serve as the frontend"""
 import streamlit as st
 import csv
+from langchain.chat_models import ChatOpenAI
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 import pinecone
+from langchain.chains import HypotheticalDocumentEmbedder
 
 def createPage():
     @st.cache_resource
@@ -16,7 +18,10 @@ def createPage():
         vectorstore = Pinecone.from_existing_index(
             index_name="cks-summary-1500tiktoken", 
             namespace="full-cks", 
-            embedding = OpenAIEmbeddings()
+            embedding = HypotheticalDocumentEmbedder.from_llm(
+                llm=ChatOpenAI(), 
+                base_embeddings=OpenAIEmbeddings(), 
+                prompt_key="web_search")
             )
         return vectorstore
 
@@ -120,7 +125,7 @@ SOURCES:
             result = chain({"question": user_input}, return_only_outputs=True)
             markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
             st.markdown(markdown_text)
-            with open('logs.csv', mode='a', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([user_input, result['answer'], result['sources']])
+            # with open('logs.csv', mode='a', newline='') as file:
+            #     writer = csv.writer(file)
+            #     writer.writerow([user_input, result['answer'], result['sources']])
     return True
