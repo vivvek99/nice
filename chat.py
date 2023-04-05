@@ -90,8 +90,6 @@ def get_prompt() -> ChatPromptTemplate:
     return prompt
 
 def get_documents(query: str) -> list[Document]:
-    docsearch = get_docsearch()
-    retriever = docsearch.as_retriever(search_kwargs={"k": 6})
     if st.session_state["ai"] != []:
         memory = get_memory()
         memory_data = memory.load_memory_variables({})
@@ -99,7 +97,9 @@ def get_documents(query: str) -> list[Document]:
         fquery = f"\nChat History:\n---\n{history}\n---\nQuestion:\n{query}"
     else:
         fquery = f"\nQuestion:\n{query}"
-    return retriever.get_relevant_documents(fquery)
+    docsearch = get_docsearch()
+    retriever = docsearch.similarity_search(fquery, 7)
+    return retriever
 
 def get_docsearch() -> Pinecone:
     if "docsearch" not in st.session_state:

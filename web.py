@@ -5,10 +5,17 @@ from streamlit.delta_generator import DeltaGenerator
 
 import config
 
-
 def set_web():
     st.set_page_config(page_title="Chat NICEly")
     st.title("Chat with NICE CKS")
+    hide_st_style = """
+                <style>
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+                </style>
+                """
+    st.markdown(hide_st_style, unsafe_allow_html=True)
 
     with open(config.INTRO_PATH, "r") as f:
         intro_text = f.read()
