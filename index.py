@@ -18,7 +18,7 @@ def load_vector_store() -> Pinecone:
     base_embeddings = OpenAIEmbeddings()
     promptlayer.api_key = "pl_2b1769e7202b6a141d4491fca41e308a"
     llm = PromptLayerChatOpenAI(pl_tags=["chat-nice-st-embeddings"])
-    prompt_template = """Please answer the user's question concisely using medical language. If in doubt mention multiple possible answers. Consider chat history if provided.
+    prompt_template = """Please answer the user's question concisely using medical language. Consider chat history if provided.
     {question}"""
     prompt = PromptTemplate(input_variables=["question"], template=prompt_template)
     llm_chain = LLMChain(llm=llm, prompt=prompt)
