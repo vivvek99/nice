@@ -4,4 +4,4 @@ and may provide incorrect answers. Please use this as a reference only.
 
 For exact information, please refer to the [NICE CKS](https://cks.nice.org).
 
-Click Reset before starting a new conversation.
+Click Reset before starting a conversation.
