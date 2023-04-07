@@ -52,7 +52,7 @@ def get_chain():
             pl_tags=["chat-nice-st"],
             temperature=0,
             model_name=config.MODEL_NAME,
-            max_tokens=700,
+            max_tokens=600,
             request_timeout=int(180)
         ),
         chain_type="stuff",
@@ -65,7 +65,7 @@ def get_chain():
 def get_memory():
     memory=ConversationSummaryBufferMemory(
         llm=PromptLayerChatOpenAI(pl_tags=["chat-nice-st-memory"], model_name=config.MODEL_NAME, request_timeout=int(180)),
-        max_token_limit=300,
+        max_token_limit=256,
         memory_key="chat_history",
         input_key="human_input",
     )
