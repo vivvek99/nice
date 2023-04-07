@@ -52,7 +52,7 @@ def get_chain():
             pl_tags=["chat-nice-st"],
             temperature=0,
             model_name=config.MODEL_NAME,
-            max_tokens=600,
+            max_tokens=512,
             request_timeout=int(180)
         ),
         chain_type="stuff",
