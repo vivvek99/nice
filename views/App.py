@@ -44,10 +44,10 @@ def createPage():
     ass1="""Please provide me with the medical contexts. 😊"""
     user2="""Contexts:
 
-    {summaries}
+{summaries}
 
-    My question:
-    {question}"""
+My question:
+{question}"""
     messages = [
         SystemMessagePromptTemplate.from_template("""You are a helpful AI medical assistant that answers a doctor's questions. You will be given extracted parts of a long medical document to help answer questions. You can only answer the question if its related to the context. If you're unsure about the answer, simply state you haven't been fed with the appropriate NICE guidelines.
 ALWAYS return a "SOURCES" part in your answer. The "SOURCES" part should be a reference to the sources in the documents provided from which you got your answer. If you're unsure about an answer, simply state so. Example of your response should be:
@@ -101,7 +101,7 @@ SOURCES:
             result = chain({"question": user_input}, return_only_outputs=True)
             markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
             st.markdown(markdown_text)
-            with open('logs.csv', mode='a', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([user_input, result['answer'], result['sources']])
+            # with open('logs.csv', mode='a', newline='') as file:
+            #     writer = csv.writer(file)
+            #     writer.writerow([user_input, result['answer'], result['sources']])
     return True
