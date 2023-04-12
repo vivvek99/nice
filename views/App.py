@@ -45,7 +45,7 @@ def createPage():
     user2="""Contexts:
 
 {summaries}
-
+---
 My question:
 {question}"""
     messages = [
