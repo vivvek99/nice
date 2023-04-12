@@ -78,7 +78,7 @@ SOURCES:
     ## Ask me anything
     Wanna chat with NICE guidelines? Try [here](https://chatnice.streamlit.app)
     """)
-    user_input = st.text_area("..and I will answer  NICEly (in ~20sec)", disabled=False, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
+    user_input = st.text_area("..and I will answer  NICEly (in ~20sec)", disabled=False, placeholder="Start typing a medical question here and press Answer")
 
     hide="""
     <style>
@@ -96,7 +96,7 @@ SOURCES:
     """
     st.markdown(hide, unsafe_allow_html=True)
 
-    if st.button("Answer") or user_input:
+    if st.button("Answer") and user_input:
         with st.spinner('Thinking...'):
             result = chain({"question": user_input}, return_only_outputs=True)
             markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
