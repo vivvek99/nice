@@ -3,7 +3,7 @@ from streamlit_option_menu import option_menu
 from views import App, Conditions, Logs, About
 
 st.set_page_config(
-    page_title="Ask NICEly CKS!", 
+    page_title="AskNICE!", 
     page_icon=":brain:", 
     #layout="wide"
     )
