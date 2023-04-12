@@ -6,6 +6,9 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 import pinecone
 from langchain.chains import HypotheticalDocumentEmbedder
+from langchain.chat_models import PromptLayerChatOpenAI
+import promptlayer
+promptlayer.api_key = "pl_2b1769e7202b6a141d4491fca41e308a"
 
 def createPage():
     @st.cache_resource
@@ -19,7 +22,7 @@ def createPage():
             index_name="cks-summary-1500tiktoken", 
             namespace="full-cks", 
             embedding = HypotheticalDocumentEmbedder.from_llm(
-                llm=ChatOpenAI(), 
+                llm=PromptLayerChatOpenAI(pl_tags=["cks-full-og", "HyDE"]), 
                 base_embeddings=OpenAIEmbeddings(), 
                 prompt_key="web_search")
             )
@@ -27,11 +30,8 @@ def createPage():
 
     docsearch = load_vectorstore()
 
-    import promptlayer
-    promptlayer.api_key = "pl_2b1769e7202b6a141d4491fca41e308a"
-
     from langchain.chains import RetrievalQAWithSourcesChain
-    from langchain.chat_models import PromptLayerChatOpenAI
+    
     from langchain.prompts.chat import (
         ChatPromptTemplate,
         SystemMessagePromptTemplate,
@@ -78,7 +78,7 @@ SOURCES:
     ## Ask me anything
     Wanna chat with NICE guidelines? Try [here](https://chatnice.streamlit.app)
     """)
-    user_input = st.text_area("..and I will answer  NICEly (in ~10sec)", disabled=False, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
+    user_input = st.text_area("..and I will answer  NICEly (in ~20sec)", disabled=False, placeholder="Start typing a medical question here and press Answer or Cmd/Ctrl+⏎")
 
     hide="""
     <style>
@@ -101,7 +101,7 @@ SOURCES:
             result = chain({"question": user_input}, return_only_outputs=True)
             markdown_text = f"#### You asked:\n\n{user_input}\n\n#### My answer:\n\n{result['answer']}\n\n\n#### Sources:\n\n{result['sources']}"
             st.markdown(markdown_text)
-            # with open('logs.csv', mode='a', newline='') as file:
-            #     writer = csv.writer(file)
-            #     writer.writerow([user_input, result['answer'], result['sources']])
+            with open('./files/logs.csv', mode='a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([user_input, result['answer'], result['sources']])
     return True
